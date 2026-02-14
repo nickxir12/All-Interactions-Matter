@@ -1,0 +1,107 @@
+{
+  "datasetCommonParams": {
+    "dataset_root_dir": "",
+    "mosi": {
+      "aligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 50, 50],
+        "feature_dims": [768, 5, 20],
+        "train_samples": 1284,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      },
+      "unaligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 375, 500],
+        "feature_dims": [768, 5, 20],
+        "train_samples": 1284,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      }
+    },
+    "mosei": {
+      "aligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 50, 50],
+        "feature_dims": [768, 74, 35],
+        "train_samples": 16326,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      },
+      "unaligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 500, 375],
+        "feature_dims": [768, 74, 35],
+        "train_samples": 16326,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      }
+    },
+    "sims": {
+      "unaligned": {
+        "featurePath": "/leonardo_work/EUHPC_A04_051/nxiros/Deepmlf/Datasets/SIMS/unaligned_39.pkl",
+        "seq_lens": [39, 400, 55],
+        "feature_dims": [768, 33, 709],
+        "train_samples": 1368,
+        "num_classes": 3,
+        "language": "cn",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      }
+    }
+  },
+  "unienc": {
+    "efthygeo_comments": {
+      "1": "unimodal pretraining - audio or vision only",
+      "2": "choose modality in uni_enc.modality parameter",
+      "3": "supports all datasets: mosi/mosei/sims with regression/classification"
+    },
+    "commonParams": {
+      "need_data_aligned": false,
+      "need_model_aligned": false,
+      "early_stop": 8,
+      "update_epochs": 4,
+      "train_mode": "regression"
+    },
+    "datasetParams": {
+      "sims": {
+        "unienc": {
+          "modality": "vision",
+          "d_enc": 64,
+          "n_head": 8,
+          "nlevels": 8,
+          "maxlen": 80,
+          "enc_dropout": 0.1,
+          "use_ln": false,
+          "use_bn": true,
+          "use_softperm": true,
+          "p_perm": 0.2,
+          "p_mask": 0.15,
+          "pooling": "no"
+        },
+        "batch_size": 32,
+        "learning_rate": 5e-4,
+        "grad_clip": 1.0,
+        "patience": 10,
+        "weight_decay": 1e-3,
+        "scheduler": {
+          "warmup_epochs": 5,
+          "T0": 8
+        }
+      }
+    }
+  }
+}

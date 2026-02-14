@@ -1,0 +1,62 @@
+import os
+import sys
+import time
+
+sys.path.insert(0, os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), "../../"))
+from MMSA.__main__ import parse_args_custom
+from MMSA.run import MMSA_run
+from MMSA.config import *
+
+
+if __name__ == "__main__":
+    start_time = time.time()
+
+    cmd_args = parse_args_custom()
+
+    cfg = get_config_regression(
+        model_name=cmd_args.model,
+        dataset_name=cmd_args.dataset,
+        config_file=cmd_args.config,
+    )
+
+    # eval parameters
+    if cmd_args.eval_mode is None:
+        eval_model = {}
+    else:
+        eval_model = {
+            "mode": cmd_args.eval_mode,
+            "type": cmd_args.eval_type,
+            "p": cmd_args.p_eval,
+            "runs": cmd_args.num_eval_run,
+        }
+
+    # Run experiment
+    MMSA_run(
+        model_name=cmd_args.model,
+        dataset_name=cmd_args.dataset,
+        config_file=cmd_args.config,
+        seeds=cmd_args.seeds,
+        is_tune=cmd_args.tune,
+        tune_times=cmd_args.tune_times,
+        feature_T=cmd_args.feature_T,
+        feature_A=cmd_args.feature_A,
+        feature_V=cmd_args.feature_V,
+        model_save_dir=cmd_args.model_save_dir,
+        res_save_dir=cmd_args.res_save_dir,
+        log_dir=cmd_args.log_dir,
+        gpu_ids=cmd_args.gpu_ids,
+        num_workers=cmd_args.num_workers,
+        verbose_level=cmd_args.verbose,
+        exp_name=cmd_args.exp_name,
+        fit_head=cmd_args.lin_head,
+        model_load_path=cmd_args.model_load_path,
+        lr_head=cmd_args.lr_head,
+        eval_model=eval_model
+    )
+
+    end_time = time.time()
+    elapsed = end_time - start_time
+    hrs, rem = divmod(elapsed, 3600)
+    mins, secs = divmod(rem, 60)
+    print(f"\n[INFO] Total run time: {int(hrs):02d}:{int(mins):02d}:{secs:05.2f} (HH:MM:SS)")

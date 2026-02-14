@@ -1,0 +1,154 @@
+{
+  "datasetCommonParams": {
+    "dataset_root_dir": "",
+    "mosi": {
+      "aligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 50, 50],
+        "feature_dims": [768, 5, 20],
+        "train_samples": 1284,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      },
+      "unaligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 375, 500],
+        "feature_dims": [768, 5, 20],
+        "train_samples": 1284,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      }
+    },
+    "mosei": {
+      "aligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 50, 50],
+        "feature_dims": [768, 74, 35],
+        "train_samples": 16326,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      },
+      "unaligned": {
+        "featurePath": "/dont/care",
+        "seq_lens": [50, 500, 375],
+        "feature_dims": [768, 74, 35],
+        "train_samples": 16326,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      }
+    },
+    "sims": {
+      "unaligned": {
+        "featurePath": "/leonardo_work/EUHPC_A04_051/nxiros/Deepmlf/Datasets/SIMS/unaligned_39.pkl",
+        "seq_lens": [39, 400, 55],
+        "feature_dims": [768, 33, 709],
+        "train_samples": 1368,
+        "num_classes": 3,
+        "language": "cn",
+        "KeyEval": "Loss",
+        "missing_rate": [0.0, 0.0, 0.0],
+        "missing_seed": [1111, 1111, 1111]
+      }
+    }
+  },
+  "trienc": {
+    "efthygeo_comments": {
+      "1": "Tri-modal encoder training audio, vision, and audiovisual jointly",
+      "2": "Loss weights (lambdas) control contribution of each modality",
+      "3": "Shared encoder_config provides defaults for all encoders",
+      "4": "Individual modality configs override shared defaults"
+    },
+    "commonParams": {
+      "need_data_aligned": false, 
+      "need_model_aligned": false,
+      "early_stop": 8,
+      "use_bert": false,
+      "use_bert_finetune": false,
+      "attn_mask": true,
+      "update_epochs": 4
+    },
+    "datasetParams": {
+      "sims": {
+        "hfPath": "/leonardo_work/EUHPC_A04_051/nxiros/Deepmlf/Datasets/SIMS/mms2",
+        "fs2": false,
+        "max_token_len": 39,
+        "trienc": {
+          "_comment": "Loss weights for each encoder component",
+          "lambda_audio": 0.5,
+          "lambda_vision": 0.5,
+          "lambda_bimodal": 1.0,
+          
+          "_comment_2": "Audio encoder configuration",
+          "audio_encoder": {
+            "d_enc": 16,
+            "n_head": 4,
+            "nlevels": 3,
+            "maxlen": 39,
+            "enc_dropout": 0.1,
+            "use_ln": false,
+            "use_bn": true,
+            "use_softperm": true,
+            "p_perm": 0.2,
+            "p_mask": 0.1,
+            "pooling": "mean"
+          },
+          
+          "_comment_3": "Vision encoder configuration",
+          "vision_encoder": {
+            "d_enc": 16,
+            "n_head": 4,
+            "nlevels": 3,
+            "maxlen": 39,
+            "enc_dropout": 0.1,
+            "use_ln": false,
+            "use_bn": true,
+            "use_softperm": true,
+            "p_perm": 0.2,
+            "p_mask": 0.1,
+            "pooling": "mean"
+          },
+          
+          "_comment_4": "Bimodal encoder configuration",
+          "bimodal_encoder": {
+            "d_enc": 30,
+            "d_enc_out": 30,
+            "n_head": 6,
+            "nlevels": 3,
+            "maxlen": 39,
+            "enc_dropout": 0.1,
+            "use_ln": false,
+            "use_bn": true,
+            "use_softperm": true,
+            "p_perm": 0.2,
+            "tf_fusion": false,
+            "use_m3": {
+              "p_a": 0.1,
+              "p_v": 0.1
+            },
+            "use_bn_config": {
+              "use_bn_a": true,
+              "use_bn_v": true
+            }
+          }
+        },
+        "batch_size": 32,
+        "learning_rate": 3e-4,
+        "grad_clip": 1.0,
+        "patience": 10,
+        "weight_decay": 1e-3
+      }
+    }
+  }
+}
